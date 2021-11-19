@@ -1,0 +1,38 @@
+public class LinearProbingHashMap<K, V> {
+         private int num; 
+    private int capacity; 
+    private K[] keys;
+    private V[] values;
+
+    public LinearProbingHashMap(int capacity) {
+        keys = (K[]) new Object[capacity];
+        values = (V[]) new Object[capacity];
+        this.capacity = capacity;
+    }
+
+    private int hash(K key) {
+        return (key.hashCode() & 0x7fffffff) % capacity;
+    }
+
+    public V get(K key) {
+        int index = hash(key);
+        while (keys[index] != null && !key.equals(keys[index])) {
+            index = (index + 1) % capacity;
+        }
+                 return values [index];    }
+
+    public void put(K key, V value) {
+        int index = hash(key);
+        while (keys[index] != null && !key.equals(keys[index])) {
+            index = (index + 1) % capacity;
+        }
+        if (keys[index] == null) {
+            keys[index] = key;
+            values[index] = value;
+            return;
+        }
+        values[index] = value;
+        num++;
+    }
+}
+
